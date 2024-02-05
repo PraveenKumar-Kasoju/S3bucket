@@ -83,7 +83,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Show files in terraform-plan directory
-        run: ls -R terraform-plan
+        run: terraform plan -out=tfplan .
 
       - name: Copy Terraform Plan
         run: cp terraform-plan/tfplan .
