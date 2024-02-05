@@ -39,7 +39,7 @@ jobs:
         run: terraform refresh
 
       - name: Terraform Plan
-        run: terraform plan -out=terraform-plan/tfplan
+        run: terraform plan
         working-directory: ${{ github.workspace }}/terraform
 
   manual-approval:
