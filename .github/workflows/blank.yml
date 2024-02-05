@@ -18,7 +18,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}  # Ensure this secret is defined
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -27,8 +27,8 @@ jobs:
         uses: trstringer/manual-approval@v1
         timeout-minutes: 60
         with:
-          secret: ${{ GUTHUB_TK }}
-          approvers: PraveenKumar-Kasoju
+          secret: ${{ github.TOKEN }}
+          approvers: PraveenKasoju
           minimum-approvals: 1
           issue-title: "Terraform setup approval"
           issue-body: "Please approve or deny the setup of Terraform."
