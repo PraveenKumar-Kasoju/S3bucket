@@ -62,5 +62,8 @@ jobs:
           additional-approved-words: ''
           additional-denied-words: ''
 
+      - name: Copy Terraform Plan
+        run: cp terraform-plan/tfplan .
+
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
