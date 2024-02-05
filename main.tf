@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "my-bucket-kasoju"
+  bucket = "my-bucket-siri"
   acl    = "private"
 
   tags = {
