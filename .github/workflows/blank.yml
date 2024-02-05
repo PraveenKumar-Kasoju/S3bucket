@@ -8,6 +8,7 @@ on:
 jobs:
   terraform-apply:
     runs-on: ubuntu-latest
+    needs: terraform-plan
     environment:
       name: dev
 
@@ -25,8 +26,8 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Copy Terraform Plan
-        run: cp terraform-plan/tfplan .
+      - name: Show files in terraform-plan directory
+        run: ls terraform-plan
 
       - name: Manual Approval
         uses: trstringer/manual-approval@v1
@@ -40,6 +41,9 @@ jobs:
           exclude-workflow-initiator-as-approver: false
           additional-approved-words: ''
           additional-denied-words: ''
+
+      - name: Copy Terraform Plan
+        run: cp terraform-plan/tfplan .
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
