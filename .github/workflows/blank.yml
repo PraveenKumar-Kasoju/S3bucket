@@ -27,7 +27,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         timeout-minutes: 60
         with:
-          secret: ${{ github.TOKEN }}
+          secret: ${{ GUTHUB_TK }}
           approvers: PraveenKumar-Kasoju
           minimum-approvals: 1
           issue-title: "Terraform setup approval"
