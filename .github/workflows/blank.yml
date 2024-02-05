@@ -6,8 +6,10 @@ on:
       - main
 
 jobs:
-  create-s3-bucket:
+  terraform-apply:
     runs-on: ubuntu-latest
+    environment:
+      name: dev
 
     steps:
       - name: Checkout code
@@ -23,6 +25,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Copy Terraform Plan
+        run: cp terraform-plan/tfplan .
+
       - name: Manual Approval
         uses: trstringer/manual-approval@v1
         timeout-minutes: 60
@@ -30,14 +35,11 @@ jobs:
           secret: ${{ secrets.MY_TOKEN }}
           approvers: PraveenKumar-Kasoju
           minimum-approvals: 1
-          issue-title: "Terraform setup approval"
-          issue-body: "Please approve or deny the setup of Terraform."
+          issue-title: "Terraform apply approval"
+          issue-body: "Please approve or deny the deployment of Terraform."
           exclude-workflow-initiator-as-approver: false
           additional-approved-words: ''
           additional-denied-words: ''
 
-      - name: Terraform Init
-        run: terraform init -reconfigure
-
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve tfplan
