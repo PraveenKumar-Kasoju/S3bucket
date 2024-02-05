@@ -40,7 +40,7 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out=terraform-plan/tfplan
-        working-directory: terraform
+        working-directory: ${{ github.workspace }}/terraform
 
   manual-approval:
     runs-on: ubuntu-latest
@@ -84,7 +84,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Show files in terraform-plan directory
-        run: terraform plan -out=tfplan .
+        run: ls -R terraform-plan
 
       - name: Copy Terraform Plan
         run: cp terraform-plan/tfplan .
