@@ -40,6 +40,7 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out=terraform-plan/tfplan
+        working-directory: terraform
 
   manual-approval:
     runs-on: ubuntu-latest
