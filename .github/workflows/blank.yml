@@ -27,8 +27,11 @@ jobs:
         run: terraform init -reconfigure
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
+        run: |
+          terraform plan -out=tfplan
+          mkdir -p terraform-plan
+          mv tfplan terraform-plan/
+        working-directory: terraform-plan
   terraform-apply:
     runs-on: ubuntu-latest
     needs: terraform-plan
