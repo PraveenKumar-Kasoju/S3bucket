@@ -73,8 +73,15 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Show files in terraform-plan directory
+        run: ls -R terraform-plan
+
       - name: Copy Terraform Plan
         run: cp terraform-plan/tfplan .
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: |
+          ls -R  # List contents of the current directory for debugging
+          ls -R terraform-plan  # List contents of terraform-plan directory for debugging
+          cp terraform-plan/tfplan .
+          terraform apply -auto-approve tfplan
