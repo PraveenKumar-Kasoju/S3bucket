@@ -1,4 +1,4 @@
-name: Create S3 Bucket
+name: Terraform Deployment
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}  # Ensure this secret is defined
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -27,7 +27,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         timeout-minutes: 60
         with:
-          secret: ${{ GITHB_TOKEN }}
+          secret: ${{ secrets.MY_TOKEN }}
           approvers: PraveenKasoju
           minimum-approvals: 1
           issue-title: "Terraform setup approval"
