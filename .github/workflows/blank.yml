@@ -23,6 +23,19 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Manual Approval
+        uses: trstringer/manual-approval@v1
+        timeout-minutes: 60
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: PraveenKumar-Kasoju
+          minimum-approvals: 1
+          issue-title: "Terraform setup approval"
+          issue-body: "Please approve or deny the setup of Terraform."
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
+
       - name: Terraform Init
         run: terraform init -reconfigure
 
