@@ -39,8 +39,8 @@ jobs:
         run: terraform refresh
 
       - name: Terraform Plan
-        run: terraform plan
-        working-directory: ${{ github.workspace }}/terraform
+        run: terraform plan -out=terraform-plan/tfplan
+        working-directory: S3bucket/terraform
 
   manual-approval:
     runs-on: ubuntu-latest
