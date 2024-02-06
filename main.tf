@@ -1,13 +1,13 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-1"  # Change to your desired region
 }
 
-resource "aws_s3_bucket" "my_bucket" {
-  bucket = "my-bucket-siri"
-  acl    = "private"
+resource "aws_vpc" "my_vpc" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
 
   tags = {
-    Name        = "MyBucket"
-    Environment = "Dev"
+    Name = "MyVPC"
   }
 }
