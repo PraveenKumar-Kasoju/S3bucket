@@ -36,13 +36,10 @@ jobs:
           approvers: PraveenKumar-Kasoju
           minimum-approvals: 1
           issue-title: "Terraform apply approval"
-          issue-body: |
-            "Please approve or deny the deployment of Terraform.
-
-            **Terraform Plan:**
-            \`\`\`
-            $(terraform show -json tfplan | jq '.[] | select(.Type == "aws_instance")')
-            \`\`\`"
+          issue-body: "Please approve or deny the deployment of Terraform."
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
