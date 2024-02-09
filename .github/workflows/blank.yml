@@ -43,3 +43,10 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
+
+      - name: Display Input FOO
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const fooInput = github.context.payload.inputs.foo;
+            console.log(`FOO: ${fooInput}`);
