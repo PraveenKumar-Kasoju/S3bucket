@@ -40,6 +40,7 @@ jobs:
           exclude-workflow-initiator-as-approver: false
           additional-approved-words: ''
           additional-denied-words: ''
+		  secret: ${{ secrets.MANUAL_APPROVAL_SECRET }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
