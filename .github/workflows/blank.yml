@@ -33,7 +33,7 @@ jobs:
         run: echo "Waiting for manual approval"
 
       - name: Set Manual Approval Status
-        uses: octokit/request-action@v2
+        uses: octokit/request-action@latest
         with:
           route: POST /repos/:owner/:repo/check-suites/:check_suite_id/rerequest
         env:
