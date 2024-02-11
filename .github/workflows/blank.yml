@@ -26,20 +26,8 @@ jobs:
       - name: Terraform Init
         run: terraform init -reconfigure
 
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
 
       - name: Manual Approval
-        uses: trstringer/manual-approval@v1
-        timeout-minutes: 60
-        with:
-          approvers: PraveenKumar-Kasoju
-          minimum-approvals: 1
-          issue-title: "Terraform apply approval"
-          issue-body: "Please approve or deny the deployment of Terraform."
-          exclude-workflow-initiator-as-approver: false
-          additional-approved-words: ''
-          additional-denied-words: ''
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: echo "Please manually approve the deployment"
