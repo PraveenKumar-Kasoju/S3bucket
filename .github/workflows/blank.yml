@@ -30,4 +30,11 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Manual Approval
-        run: echo "Please manually approve the deployment"
+        run: echo "Waiting for manual approval"
+
+      - name: Set Manual Approval Status
+        uses: octokit/request-action@v2
+        with:
+          route: POST /repos/:owner/:repo/check-suites/:check_suite_id/rerequest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
