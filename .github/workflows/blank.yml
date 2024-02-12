@@ -43,7 +43,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         timeout-minutes: 60
         with:
-          approvers: PraveenKumarKasoju
+          approvers: PraveenKasoju
           minimum-approvals: 1
           issue-title: "Terraform apply approval"
           issue-body: "Please approve or deny the deployment of Terraform."
