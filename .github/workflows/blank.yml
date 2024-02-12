@@ -1,13 +1,20 @@
-name: Terraform Deployment
-
+name: Terraform
 on:
   push:
     branches:
-      - main
+      - dev
+
+permissions:
+  contents: read
 
 jobs:
-  create-s3-bucket:
+  terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: terraform
 
     steps:
       - name: Checkout code
@@ -16,9 +23,9 @@ jobs:
       - name: Configure AWS Credentials Action For GitHub Actions
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.TF_DEV_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.TF_DEV_SECRET_KEY }}
+          aws-region: ${{ secrets.TF_DEV_REGION }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -26,15 +33,23 @@ jobs:
       - name: Terraform Init
         run: terraform init -reconfigure
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - name: Terraform Refresh
+        run: terraform refresh
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
 
       - name: Manual Approval
-        run: echo "Waiting for manual approval"
-
-      - name: Set Manual Approval Status
-        uses: octokit/request-action@latest
+        uses: trstringer/manual-approval@v1
+        timeout-minutes: 60
         with:
-          route: POST /repos/:owner/:repo/check-suites/:check_suite_id/rerequest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          approvers: PraveenKumarKasoju
+          minimum-approvals: 1
+          issue-title: "Terraform apply approval"
+          issue-body: "Please approve or deny the deployment of Terraform."
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
